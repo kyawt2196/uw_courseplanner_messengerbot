@@ -628,7 +628,7 @@ app.listen(app.get('port'), function() {
       console.log("fail");
     }
   });
-  // end of test functions
+  // end of test functions!
 
 });
 
