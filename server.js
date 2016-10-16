@@ -131,6 +131,7 @@ function removeClass(uid, sln) {
         var courseList = snapshot.child('courseList').val()
         // check if class exists in the list:
         if (courseList.indexOf(sln) == -1) {
+            console.log("class not in list");
           // not in the list, can't delete!!
           resolve(false);
         } else {
