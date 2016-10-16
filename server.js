@@ -25,6 +25,20 @@ app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
 /*
+ * Connecting Firebase Database
+ * 
+ */
+var firebase = require("firebase");
+// Initialize Firebase
+var firebaseConfig = {
+  apiKey: " AIzaSyCBk4exBD9ncv7sxfh6FvUY1wo5owe3VCM",
+  authDomain: " course-finder-bot-databa-1db35.firebaseapp.com",
+  databaseURL: "https://https://course-finder-bot-databa-1db35.firebaseio.com",
+  storageBucket: "<we dont have a storage bucket>.appspot.com",
+};
+firebase.initializeApp(firebaseConfig);
+
+/*
  * Be sure to setup your config values before running this code. You can 
  * set them using environment variables or modifying the config file in /config.
  *

@@ -1,6 +1,6 @@
 {
-    "appSecret": "c8805b5211e32466d13d7eff6e746009",
-    "pageAccessToken": "EAAHZBwiExV34BAMTDFI45nZAmyypZBpi0J465G7sxsCgdJJZCjWUL44OKNwPY4IrdNSMTc2m0nkh6FLo9s7RG9g3ZBQtSsfpnZBfAa9wJwrRaFjGgkp0OEbY5Kut54Y3Ec138OZBAueNspXZCJe4AodCt7wpmEkvLeDNs62h3vo5YAZDZD",
-    "validationToken": "hello_world",
+    "appSecret": "04270ebc2ec104484f66955c9d138335",
+    "pageAccessToken": "EAAOHHmAUEiYBABqT9JtbZBMms5eFeTwSRldTgZCbQWbNNWImTOlgZBrtetYcPqakglF4LE50dzCvzYIM5s2jsgUITTO9PDM0AxnyHZA1qX9p4c3Cap1nWgS46r4xuIASYrdT9M07GZB2MFu1KwvXaetf5GkgzGOhWtzxr8ekkVwZDZD",
+    "validationToken": "dubhacks",
     "serverURL": "https://coursefinderbot.herokuapp.com/"
 }
