@@ -486,7 +486,7 @@ function receivedMessage(event) {
                             text = "These are the classes I saved for you:";
                             list.forEach(function(entry) {
                                 text += "\n entry";
-                            }
+                            });
                         }
 
                         sendTextMessage(senderID, text);
