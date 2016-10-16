@@ -277,11 +277,57 @@ function receivedMessage(event) {
     return;
   }
 
+    // {
+    //  "id": "81a675f0-b1d6-400f-ba6b-bb5aba339e2b",
+    //  "timestamp": "2016-10-16T08:58:22.25Z",
+    //  "result": {
+    //    "source": "agent",
+    //    "resolvedQuery": "add cse 344",
+    //    "action": "",
+    //    "actionIncomplete": false,
+    //    "parameters": {
+    //      "Department": "CSE",
+    //      "Functions": "add",
+    //      "number": "344"
+    //    },
+    //    "contexts": [],
+    //    "metadata": {
+    //      "intentId": "c35deba0-bcc1-4835-afd6-407b93c0b04b",
+    //      "webhookUsed": "false",
+    //      "intentName": "Search function"
+    //    },
+    //    "fulfillment": {
+    //      "speech": ""
+    //    },
+    //    "score": 0.6666666666666666
+    //  },
+    //  "status": {
+    //    "code": 200,
+    //    "errorType": "success"
+    //  },
+    //  "sessionId": "490a07d7-2d0f-4e77-925d-3d90edef9aa2"
+    // }
+
   if (messageText) {
     var request = apiaiApp.textRequest(messageText);
     console.log("sending request to apiai: " + request);
     request.on('response', function(response) {
-        console.log(response);
+        console.log(response.parameters.Functions);
+        var func = response.parameters.Functions;
+        var department = response.parameters.Department;
+        var classNum = response.parameters.number;
+        var departmentClass = department + " " + classNum;
+        switch(func){
+          case 'add':
+            sendTextMessage(senderID, "Adding class " + departmentClass);
+          case 'find':
+            sendTextMessage(senderID, "finding class " + departmentClass);
+          case 'remove':
+            sendTextMessage(senderID, "removing class " + departmentClass);
+          default:
+            sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
+
+        }
     });
 
      
