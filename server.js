@@ -466,11 +466,11 @@ function receivedMessage(event) {
                 } else {
                     console.log("success " + departmentClass)
                     sendTextMessage(senderID, "Here is the class info: \n" +
-                        "sln " + name[0].sln + " \n" +
-                        "nameOfClass " + name[0].nameOfClass + " \n" +
-                        "start time:  " + name[0].start + " \n" +
-                        "end time: " + name[0].end + " \n" +
-                        "isOpen " + name[0].isOpen + " \n" 
+                        "SLN " + name[0].sln + " \n" +
+                        "Name of the class: " + name[0].nameOfClass + " \n" +
+                        "Start time:  " + name[0].start + " \n" +
+                        "End time: " + name[0].end + " \n" +
+                        "Is it open? " + name[0].isOpen + " \n" 
                       );
                 }
             });
