@@ -441,13 +441,24 @@ function receivedMessage(event) {
         var departmentClass = department + " " + classNum;
         switch(func){
           case 'add':
-            sendTextMessage(senderID, "Okay, I'll add " + departmentClass + " to your list of classes.");
-              addClass(senderID, departmentClass).then(function(bool) {
-              if (bool) {
-                console.log("success");
-              } else {
-                console.log("fail");
-              }
+            course.getClassByClassName({
+              prefix: department,
+              number:classNum
+            },function (err, name) {
+                if (typeof name[0] === 'undefined') {
+                    console.log("error " + departmentClass)
+                    sendTextMessage(senderID, "this class could not be found");
+                } else {
+                    console.log("success, adding " + departmentClass)
+                    addClass(senderID, name[0].sln).then(function(bool) {
+                      if (bool) {
+                        sendTextMessage(senderID, "Added class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", to your list");
+                      } else {
+                        sendTextMessage(senderID, "Fail to add class");
+                      }
+                    });
+                    
+                }
             });
             break;
           case 'find':
@@ -462,11 +473,11 @@ function receivedMessage(event) {
                 } else {
                     console.log("success " + departmentClass)
                     sendTextMessage(senderID, "Here is the class info: \n" +
-                        "sln " + name[0].sln + " \n" +
-                        "nameOfClass " + name[0].nameOfClass + " \n" +
-                        "start time:  " + name[0].start + " \n" +
-                        "end time: " + name[0].end + " \n" +
-                        "isOpen " + name[0].isOpen + " \n" 
+                        "SLN " + name[0].sln + " \n" +
+                        "Name of the class: " + name[0].nameOfClass + " \n" +
+                        "Start time:  " + name[0].start + " \n" +
+                        "End time: " + name[0].end + " \n" +
+                        "Is it open? " + name[0].isOpen + " \n" 
                       );
                 }
             });
