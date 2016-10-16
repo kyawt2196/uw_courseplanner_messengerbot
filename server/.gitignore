@@ -1,4 +1,0 @@
-#ignore packages install by npm
-
-node_modules/
-dist/
