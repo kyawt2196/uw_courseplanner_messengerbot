@@ -38,11 +38,30 @@ firebase.initializeApp({
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = firebase.database();
 
-// Initialize the users course list
+/**
+ * Returns a promise, if user does not exist, creates a user and resolves to true,
+ * If user already exists, returns a promise which resolves to false;
+ * 
+ * Returns Promise<boolean> 
+ */
 function createUser(uid) {
-  var usersCourseRef = db.ref('UserCourses');
-  usersCourseRef.child(uid).set({
-    courseList: []
+  return new Promise(function(resolve, reject) {
+    var usersCourseRef = db.ref('UserCourses/' + uid);
+    usersCourseRef.once("value")
+      .then(function(snapshot) {
+        var userList = snapshot.val();
+        if (userList === null) {
+          console.log("user does not exist");
+          var courseRef = db.ref('UserCourses');
+          // no such user, create the user:
+          courseRef.child(uid).set({
+            courseList: []
+          });
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
   });
 }
 
@@ -610,9 +629,17 @@ function callSendAPI(messageData) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 
-
-
+  
   // Test server functions:
+  createUser('uid:bye').then(function(bool) {
+    if (bool) {
+      console.log("success");
+    } else {
+      console.log("fail");
+    }
+  });
+
+
   addClass('uid:bye', '23157').then(function(bool) {
     if (bool) {
       console.log("success");
@@ -622,6 +649,14 @@ app.listen(app.get('port'), function() {
   });
 
   removeClass('uid:bye', '23157').then(function(bool) {
+    if (bool) {
+      console.log("success");
+    } else {
+      console.log("fail");
+    }
+  });
+
+  createUser('uid:bye').then(function(bool) {
     if (bool) {
       console.log("success");
     } else {
