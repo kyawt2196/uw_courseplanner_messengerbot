@@ -497,11 +497,11 @@ function receivedMessage(event) {
                         prefix: department
                     }, function (err, name) {
                         if (typeof name[0] === 'undefined') {
-                            console.log("error " + department)
-                        sendTextMessage(senderID, "these classes could not be found");
+                            console.log("error " + department);
+                            sendTextMessage(senderID, "these classes could not be found");
                         } else {
-                            console.log("success " + department)
-                        sendTextMessage(senderID, "Here is all the classes info: \n" +
+                            console.log("success " + department);
+                            sendTextMessage(senderID, "Here is all the classes info: \n" +
                             "Class: " + name[0].prefix + " " + name[0].number + " \n" +
                             "Name of the class: " + name[0].nameOfClass + " \n"
                             );
