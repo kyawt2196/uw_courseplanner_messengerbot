@@ -38,14 +38,71 @@ firebase.initializeApp({
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = firebase.database();
 
-function createUser(uid, fName, lName) {
-  var usersRef = db.ref('users');
-  usersRef.set({
-    uid: {
-      firstName: fName,
-      lastName: lName,
-    } 
+// Initialize the users course list
+function createUser(uid) {
+  var usersCourseRef = db.ref('UserCourses');
+  usersCourseRef.child(uid).set({
+    courseList: []
   });
+}
+
+
+/**
+ * Returns a promise, when successfully added, resolves with boolean true,
+ * If failed to add, resolves with false
+ * 
+ * Returns Promise<boolean> 
+ */
+function addClass(uid, sln) {
+  return new Promise(function(resolve, reject) {
+    var courseListRef = db.ref('UserCourses/' + uid);
+    // get existing course list:
+    courseListRef.once("value")
+      .then(function(snapshot) {
+        // key() is the last path so UID
+        // child(path) is from after the key
+        var courseList = snapshot.child('courseList').val()
+        // check if class exists in the list:
+        if (courseList.indexOf(sln) == -1) {
+          // not yet in the list:
+          courseList.push(sln);
+          // update it:
+          courseListRef.update({
+            courseList: courseList,
+          });
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+  }); 
+}
+
+function removeClass(uid, sln) {
+  return new Promise(function(resolve, reject) {
+    var courseListRef = db.ref('UserCourses/' + uid);
+    // get existing course list:
+    courseListRef.once("value")
+      .then(function(snapshot) {
+        // key() is the last path so UID
+        // child(path) is from after the key
+        var courseList = snapshot.child('courseList').val()
+        // check if class exists in the list:
+        if (courseList.indexOf(sln) == -1) {
+          // not in the list, can't delete!!
+          resolve(false);
+        } else {
+          var index = courseList.indexOf(sln);
+          var removed = courseList.splice(index, 1);
+          // update it:
+          courseListRef.update({
+            courseList: courseList,
+          });
+          console.log("removed: " + removed);
+          resolve(true);
+        }
+      });
+  }); 
 }
 
 var apiaiApp = apiai(config.get('apiaiClientAccessToken'));
@@ -509,8 +566,27 @@ function callSendAPI(messageData) {
 // certificate authority.
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
-  console.log('Testing create user function: ');
-  createUser('uid:hello', 'John', 'Doe');
+
+
+
+  // Test server functions:
+  addClass('uid:bye', '23157').then(function(bool) {
+    if (bool) {
+      console.log("success");
+    } else {
+      console.log("fail");
+    }
+  });
+
+  removeClass('uid:bye', '23157').then(function(bool) {
+    if (bool) {
+      console.log("success");
+    } else {
+      console.log("fail");
+    }
+  });
+  // end of test functions
+
 });
 
 module.exports = app;
