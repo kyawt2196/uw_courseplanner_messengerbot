@@ -490,6 +490,7 @@ function receivedMessage(event) {
                         }
 
                         sendTextMessage(senderID, text);
+                    });
                     break;
                 case 'list':
                     console.log("finding all courses in " + department + " department");
