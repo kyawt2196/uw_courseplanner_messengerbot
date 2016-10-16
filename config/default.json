@@ -2,5 +2,5 @@
     "appSecret": "c8805b5211e32466d13d7eff6e746009",
     "pageAccessToken": "EAAHZBwiExV34BAMTDFI45nZAmyypZBpi0J465G7sxsCgdJJZCjWUL44OKNwPY4IrdNSMTc2m0nkh6FLo9s7RG9g3ZBQtSsfpnZBfAa9wJwrRaFjGgkp0OEbY5Kut54Y3Ec138OZBAueNspXZCJe4AodCt7wpmEkvLeDNs62h3vo5YAZDZD",
     "validationToken": "hello_world",
-    "serverURL": "https://messengerbottutorial.herokuapp.com/"
+    "serverURL": "https://coursefinderbot.herokuapp.com/"
 }
