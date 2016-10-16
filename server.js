@@ -439,8 +439,12 @@ function receivedMessage(event) {
         var department = results.parameters.Departments;
         var classNum = results.parameters.number;
         var intro = results.parameters.Introduction;
+        var help = results.parameters.help;
         var departmentClass = department + " " + classNum;
-        if (intro != undefined && intro != "") {
+        if (help != undefined && help != "") {
+          sendTextMessage(senderID, "Let me show you how I can help you! You can search for a class by typing \"search\" or " + 
+            "I can add a class by Course and Title by typing \"add\" or remove a class by typing \"remove\"");
+        } else if (intro != undefined && intro != "") {
             switch(intro) {
                 case 'intro':
                     sendTextMessage(senderID, "Oh hi there! I'm Jennifer. A course finder");
