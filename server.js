@@ -326,10 +326,13 @@ function receivedMessage(event) {
         switch(func){
           case 'add':
             sendTextMessage(senderID, "Adding class " + departmentClass);
+            break;
           case 'find':
             sendTextMessage(senderID, "finding class " + departmentClass);
+            break;
           case 'remove':
             sendTextMessage(senderID, "removing class " + departmentClass);
+            break;
           default:
             sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
         }
