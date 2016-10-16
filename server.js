@@ -445,7 +445,7 @@ function receivedMessage(event) {
         var departmentClass = department + " " + classNum;
         switch(func){
           case 'add':
-            sendTextMessage(senderID, "Adding class " + departmentClass);
+            sendTextMessage(senderID, "Okay, I'll add " + departmentClass + " to your list of classes.");
               addClass(senderID, departmentClass).then(function(bool) {
               if (bool) {
                 console.log("success");
@@ -455,10 +455,10 @@ function receivedMessage(event) {
             });
             break;
           case 'find':
-            sendTextMessage(senderID, "finding class " + departmentClass);
+            sendTextMessage(senderID, "Sure, let me find " + departmentClass + " for you...");
             break;
           case 'remove':
-            sendTextMessage(senderID, "removing class " + departmentClass);
+            sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");
             removeClass(senderID, departmentClass).then(function(bool) {
               if (bool) {
                 console.log("success");
@@ -468,7 +468,7 @@ function receivedMessage(event) {
             });
             break;
           default:
-            sendTextMessage(senderID, "I'm sorry. I didn't quite grasp what you just said");
+            sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
         }
     });
 
