@@ -418,7 +418,7 @@ function receivedMessage(event) {
             });
             break;
           default:
-            sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
+            sendTextMessage(senderID, "I'm sorry. I didn't quite grasp what you just said");
         }
     });
 
