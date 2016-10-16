@@ -394,6 +394,7 @@ function receivedMessage(event) {
     }
     var request = apiaiApp.textRequest(messageText, options);
     request.on('response', function(response) {
+        createUser(senderID);
         var results = response.result;
         var func = results.parameters.Functions;
         var department = results.parameters.Department;
