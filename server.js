@@ -453,6 +453,7 @@ function receivedMessage(event) {
                     break;
                 default:
                     sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
+            }
         } else {
             switch(func){
               case 'add':
