@@ -48,6 +48,8 @@ function createUser(uid, fName, lName) {
   });
 }
 
+
+Console.log("our api ai token" + config.get('apiaiClientAccessToken'));
 var apiaiApp = apiai(config.get('apiaiClientAccessToken'));
 
 /*
@@ -276,7 +278,7 @@ function receivedMessage(event) {
   }
 
   if (messageText) {
-    var request = app.textRequest(messageText);
+    var request = apiaiApp.textRequest(messageText);
 
     request.on('response', function(response) {
         console.log(response);
