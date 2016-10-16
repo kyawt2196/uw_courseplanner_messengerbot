@@ -463,12 +463,13 @@ function receivedMessage(event) {
                 if (typeof name[0] === 'undefined') {
                     sendTextMessage(senderID, "this class could not be found");
                 } else {
-                    sendTextMessage(senderID, "Here is the class info:");
-                    sendTextMessage(senderID, "sln " + name[0].sln);
-                    sendTextMessage(senderID, "nameOfClass " + name[0].nameOfClass);
-                    sendTextMessage(senderID, "start " + name[0].start);
-                    sendTextMessage(senderID, "end " + name[0].end);
-                    sendTextMessage(senderID, "isOpen " + name[0].isOpen);
+                    sendTextMessage(senderID, "Here is the class info: \n" +
+                        "sln " + name[0].sln + " \n" +
+                        "nameOfClass " + name[0].nameOfClass + " \n" +
+                        "start time:  " + name[0].start + " \n" +
+                        "end time: " + name[0].end + " \n" +
+                        "isOpen " + name[0].isOpen + " \n" 
+                      );
                 }
             });
             break;
