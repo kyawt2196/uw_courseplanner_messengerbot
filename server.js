@@ -332,28 +332,71 @@ function receivedMessage(event) {
     return;
   }
 
+    // {
+    //  "id": "81a675f0-b1d6-400f-ba6b-bb5aba339e2b",
+    //  "timestamp": "2016-10-16T08:58:22.25Z",
+    //  "result": {
+    //    "source": "agent",
+    //    "resolvedQuery": "add cse 344",
+    //    "action": "",
+    //    "actionIncomplete": false,
+    //    "parameters": {
+    //      "Department": "CSE",
+    //      "Functions": "add",
+    //      "number": "344"
+    //    },
+    //    "contexts": [],
+    //    "metadata": {
+    //      "intentId": "c35deba0-bcc1-4835-afd6-407b93c0b04b",
+    //      "webhookUsed": "false",
+    //      "intentName": "Search function"
+    //    },
+    //    "fulfillment": {
+    //      "speech": ""
+    //    },
+    //    "score": 0.6666666666666666
+    //  },
+    //  "status": {
+    //    "code": 200,
+    //    "errorType": "success"
+    //  },
+    //  "sessionId": "490a07d7-2d0f-4e77-925d-3d90edef9aa2"
+    // }
+
   if (messageText) {
-
-    // If we receive a text message, check to see if it matches any special
-    // keywords and send back the corresponding example. Otherwise, just echo
-    // the text we received.
-    switch (messageText) {
-      case 'find':
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
-
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
+    var options = {
+      sessionId: 'senderID'
     }
+    var request = apiaiApp.textRequest(messageText, options);
+    request.on('response', function(response) {
+        var results = response.result;
+        var func = results.parameters.Functions;
+        var department = results.parameters.Department;
+        var classNum = results.parameters.number;
+        var departmentClass = department + " " + classNum;
+        switch(func){
+          case 'add':
+            sendTextMessage(senderID, "Adding class " + departmentClass);
+            break;
+          case 'find':
+            sendTextMessage(senderID, "finding class " + departmentClass);
+            break;
+          case 'remove':
+            sendTextMessage(senderID, "removing class " + departmentClass);
+            break;
+          default:
+            sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
+        }
+    });
+
+     
+    request.on('error', function(error) {
+        console.log(error);
+    });
+ 
+    request.end();
+        
+    
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
