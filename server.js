@@ -455,6 +455,7 @@ function receivedMessage(event) {
             });
             break;
           case 'find':
+            console.log("finding class " + departmentClass)
             var result = course.getClassByClassName({
               prefix: department,
               number:classNum
