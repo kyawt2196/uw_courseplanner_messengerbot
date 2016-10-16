@@ -16,7 +16,7 @@ var courseSchema = mongoose.Schema({
 	link:String
 });
 
-userSchema.statics.createCourse = function (courseModel) {
+courseSchema.statics.createCourse = function (courseModel) {
     return Course.find({ sln: courseModel.sln },
         function (err, course) {
             if (course.length == 0) {

@@ -18,7 +18,7 @@ const
   https = require('https'),  
   request = require('request'),
   apiai = require('apiai'),
-  mongoose = require('mongoose-connect.js'),
+  mongoose = require('./mongoose-connect.js'),
   course = require('./models/courses.js');
 
 var app = express();
