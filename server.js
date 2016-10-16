@@ -315,23 +315,24 @@ function receivedMessage(event) {
     var request = apiaiApp.textRequest(messageText, options);
     console.log("sending request to apiai: " + request);
     request.on('response', function(response) {
-        var jsonResponseObj = JSON.parse(response);
-        console.log(jsonResponseObj.parameters.Functions);
-        var func = jsonResponseObj.parameters.Functions;
-        var department = jsonResponseObj.parameters.Department;
-        var classNum = jsonResponseObj.parameters.number;
-        var departmentClass = department + " " + classNum;
-        switch(func){
-          case 'add':
-            sendTextMessage(senderID, "Adding class " + departmentClass);
-          case 'find':
-            sendTextMessage(senderID, "finding class " + departmentClass);
-          case 'remove':
-            sendTextMessage(senderID, "removing class " + departmentClass);
-          default:
-            sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
+        console.log(response);
+        // var jsonResponseObj = JSON.parse(response);
+        // console.log(jsonResponseObj.parameters.Functions);
+        // var func = jsonResponseObj.parameters.Functions;
+        // var department = jsonResponseObj.parameters.Department;
+        // var classNum = jsonResponseObj.parameters.number;
+        // var departmentClass = department + " " + classNum;
+        // switch(func){
+        //   case 'add':
+        //     sendTextMessage(senderID, "Adding class " + departmentClass);
+        //   case 'find':
+        //     sendTextMessage(senderID, "finding class " + departmentClass);
+        //   case 'remove':
+        //     sendTextMessage(senderID, "removing class " + departmentClass);
+        //   default:
+        //     sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
 
-        }
+        // }
     });
 
      
