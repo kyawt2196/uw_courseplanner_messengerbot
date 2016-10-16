@@ -276,27 +276,13 @@ function receivedMessage(event) {
   }
 
   if (messageText) {
+    var request = app.textRequest(messageText);
 
-    // If we receive a text message, check to see if it matches any special
-    // keywords and send back the corresponding example. Otherwise, just echo
-    // the text we received.
-    switch (messageText) {
-      case 'find':
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
-
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
-    }
+    request.on('response', function(response) {
+        console.log(response);
+    });
+        
+    
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
