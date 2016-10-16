@@ -397,7 +397,7 @@ function receivedMessage(event) {
         createUser(senderID);
         var results = response.result;
         var func = results.parameters.Functions;
-        var department = results.parameters.Department;
+        var department = results.parameters.Departments;
         var classNum = results.parameters.number;
         var departmentClass = department + " " + classNum;
         switch(func){
@@ -425,7 +425,7 @@ function receivedMessage(event) {
             });
             break;
           default:
-            sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
+            sendTextMessage(senderID, "I'm sorry. I didn't quite grasp what you just said");
         }
     });
 
