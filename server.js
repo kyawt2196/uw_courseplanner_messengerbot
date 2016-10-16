@@ -455,7 +455,25 @@ function receivedMessage(event) {
             });
             break;
           case 'find':
-            sendTextMessage(senderID, "Sure, let me find " + departmentClass + " for you...");
+            console.log("finding class " + departmentClass)
+            var result = course.getClassByClassName({
+              prefix: department,
+              number:classNum
+            },function (err, name) {
+                if (typeof name[0] === 'undefined') {
+                    console.log("error " + departmentClass)
+                    sendTextMessage(senderID, "this class could not be found");
+                } else {
+                    console.log("success " + departmentClass)
+                    sendTextMessage(senderID, "Here is the class info: \n" +
+                        "SLN " + name[0].sln + " \n" +
+                        "Name of the class: " + name[0].nameOfClass + " \n" +
+                        "Start time:  " + name[0].start + " \n" +
+                        "End time: " + name[0].end + " \n" +
+                        "Is it open? " + name[0].isOpen + " \n" 
+                      );
+                }
+            });
             break;
           case 'remove':
             sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");
