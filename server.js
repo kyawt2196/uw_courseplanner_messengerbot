@@ -377,12 +377,26 @@ function receivedMessage(event) {
         switch(func){
           case 'add':
             sendTextMessage(senderID, "Adding class " + departmentClass);
+              addClass(senderID, departmentClass).then(function(bool) {
+              if (bool) {
+                console.log("success");
+              } else {
+                console.log("fail");
+              }
+            });
             break;
           case 'find':
             sendTextMessage(senderID, "finding class " + departmentClass);
             break;
           case 'remove':
             sendTextMessage(senderID, "removing class " + departmentClass);
+            removeClass(senderID, departmentClass).then(function(bool) {
+              if (bool) {
+                console.log("success");
+              } else {
+                console.log("fail");
+              }
+            });
             break;
           default:
             sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
