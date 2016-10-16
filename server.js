@@ -461,8 +461,10 @@ function receivedMessage(event) {
               number:classNum
             },function (err, name) {
                 if (typeof name[0] === 'undefined') {
+                    console.log("error " + departmentClass)
                     sendTextMessage(senderID, "this class could not be found");
                 } else {
+                    console.log("success " + departmentClass)
                     sendTextMessage(senderID, "Here is the class info: \n" +
                         "sln " + name[0].sln + " \n" +
                         "nameOfClass " + name[0].nameOfClass + " \n" +
