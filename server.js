@@ -485,7 +485,7 @@ function receivedMessage(event) {
                         } else {
                             text = "These are the classes I saved for you:";
                             list.forEach(function(entry) {
-                                if (entry != null) {
+                                if (entry !== null) {
                                     text += "\n " + entry;
                                 } 
                             });
