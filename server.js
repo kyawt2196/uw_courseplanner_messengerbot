@@ -55,7 +55,7 @@ function createUser(uid) {
           var courseRef = db.ref('UserCourses');
           // no such user, create the user:
           courseRef.child(uid).set({
-            courseList: ["child"]
+            courseList: []
           });
           resolve(true);
         } else {
@@ -405,7 +405,6 @@ function receivedMessage(event) {
             });
             break;
           case 'find':
-            createUser(senderID);
             sendTextMessage(senderID, "finding class " + departmentClass);
             break;
           case 'remove':
