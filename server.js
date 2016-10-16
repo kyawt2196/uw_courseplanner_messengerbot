@@ -49,7 +49,7 @@ function createUser(uid, fName, lName) {
 }
 
 
-Console.log("our api ai token" + config.get('apiaiClientAccessToken'));
+console.log("our api ai token" + config.get('apiaiClientAccessToken'));
 var apiaiApp = apiai(config.get('apiaiClientAccessToken'));
 
 /*
