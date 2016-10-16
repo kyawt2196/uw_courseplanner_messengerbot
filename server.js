@@ -456,6 +456,21 @@ function receivedMessage(event) {
             break;
           case 'find':
             sendTextMessage(senderID, "Sure, let me find " + departmentClass + " for you...");
+            var result = course.getClassByClassName({
+              prefix:"UBW",
+              number:101
+            },function (err, name) {
+                if (typeof name[0] === 'undefined') {
+                    sendTextMessage(senderID, "this class could not be found");
+                } else {
+                    sendTextMessage(senderID, "Here is the class info:");
+                    sendTextMessage(senderID, "sln " + name[0].sln);
+                    sendTextMessage(senderID, "nameOfClass " + name[0].nameOfClass);
+                    sendTextMessage(senderID, "start " + name[0].start);
+                    sendTextMessage(senderID, "end " + name[0].end);
+                    sendTextMessage(senderID, "isOpen " + name[0].isOpen);
+                }
+            });
             break;
           case 'remove':
             sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");

@@ -42,6 +42,11 @@ courseSchema.statics.createCourse = function (courseModel) {
 };
 
 
+courseSchema.statics.getClassByClassName = function (courseModel, cb) {
+    return Course.find({ prefix: new RegExp(courseModel.prefix, 'i'), number: courseModel.number, cb});
+};
+
+
 // Export the User Schema
 var Course = mongoose.model('Courses', courseSchema);
 module.exports = Course;
