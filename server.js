@@ -71,6 +71,23 @@ function createUser(uid) {
   });
 }
 
+/**
+ * Returns a Promise which resolves with the list of courses the user has registered
+ */
+function getUserCourseList(uid) {
+  return new Promise(function(resolve, reject) {
+    var courseListRef = db.ref('UserCourses/' + uid);
+    // get existing course list:
+    courseListRef.once("value")
+      .then(function(snapshot) {
+        // key() is the last path so UID
+        // child(path) is from after the key
+        var courseList = snapshot.child('courseList').val()
+        resolve(courseList);
+      });
+  }); 
+}
+
 
 /**
  * Returns a promise, when successfully added, resolves with boolean true,
@@ -444,7 +461,7 @@ function receivedMessage(event) {
         if (help != undefined && help != "") {
           sendTextMessage(senderID, "Let me show you how I can help you! You can search for a class by typing \"search\" or " + 
             "I can add a class by Course and Title by typing \"add\" or remove a class by typing \"remove\"");
-        } else if (intro != undefined && intro != "") {
+        } else  if (intro != undefined && intro != "") {
             switch(intro) {
                 case 'intro':
                     sendTextMessage(senderID, "Oh hi there! I'm a course finder!");
