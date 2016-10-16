@@ -793,7 +793,6 @@ app.listen(app.get('port'), function() {
     // });
 
     // end of test functions!
-
 });
 
 module.exports = app;
