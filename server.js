@@ -316,11 +316,10 @@ function receivedMessage(event) {
     console.log("sending request to apiai: " + request);
     request.on('response', function(response) {
         console.log(response);
-        console.log(typeof(response.result.parameters.Functions));
-        console.log('parsing response object');
-        var func = response.parameters.Functions;
-        var department = response.parameters.Department;
-        var classNum = response.parameters.number;
+        var results = response.result;
+        var func = results.parameters.Functions;
+        var department = results.parameters.Department;
+        var classNum = results.parameters.number;
         var departmentClass = department + " " + classNum;
         switch(func){
           case 'add':
