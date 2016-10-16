@@ -455,7 +455,6 @@ function receivedMessage(event) {
             });
             break;
           case 'find':
-            sendTextMessage(senderID, "Sure, let me find " + departmentClass + " for you...");
             var result = course.getClassByClassName({
               prefix: department,
               number:classNum
