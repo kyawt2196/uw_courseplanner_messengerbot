@@ -50,23 +50,29 @@ var db = firebase.database();
  */
 function createUser(uid) {
   return new Promise(function(resolve, reject) {
-    var usersCourseRef = db.ref('UserCourses/' + uid);
-    usersCourseRef.once("value")
+    var courseListRef = db.ref('UserCourses');
+    courseListRef.once("value")
       .then(function(snapshot) {
-        var userList = snapshot.val();
-        if (userList === null) {
-          console.log("user does not exist");
-          var courseRef = db.ref('UserCourses');
-          // no such user, create the user:
-          courseRef.child(uid).set({
-            courseList: []
+        console.log('hello: ' + uid);
+        var uidRetrieved = snapshot.child(uid).val();
+        if (uidRetrieved === null) {
+          console.log('you do not exist');
+          // create a new user:
+          courseListRef.child(uid).set({
+            courseList: ['null']
           });
           resolve(true);
         } else {
+          // dont create a new user
+          console.log('welcome back: ' + uid);
           resolve(false);
         }
       });
   });
+
+  
+
+  
 }
 
 
@@ -431,6 +437,7 @@ function receivedMessage(event) {
     }
     var request = apiaiApp.textRequest(messageText, options);
     request.on('response', function(response) {
+        createUser(senderID);
         var results = response.result;
         var func = results.parameters.Functions;
         var department = results.parameters.Departments;
@@ -684,42 +691,48 @@ function callSendAPI(messageData) {
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
 app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-
+  console.log('Messenger Bot Server running on ', app.get('port'));
   
   // Test server functions:
-  createUser('uid:bye').then(function(bool) {
-    if (bool) {
-      console.log("success");
-    } else {
-      console.log("fail");
-    }
-  });
+  // createUser('uid:bye').then(function(bool) {
+  //   if (bool) {
+  //     console.log("success");
+  //   } else {
+  //     console.log("fail");
+  //   }
+  // });
+  // createUser('uid:hello').then(function(bool) {
+  //   if (bool) {
+  //     console.log("success");
+  //   } else {
+  //     console.log("fail");
+  //   }
+  // });
+  // createUser('uid:bye').then(function(bool) {
+  //   if (bool) {
+  //     console.log("success");
+  //   } else {
+  //     console.log("fail");
+  //   }
+  // });
 
 
-  addClass('uid:bye', '23157').then(function(bool) {
-    if (bool) {
-      console.log("success");
-    } else {
-      console.log("fail");
-    }
-  });
+  // addClass('uid:bye', '23157').then(function(bool) {
+  //   if (bool) {
+  //     console.log("success");
+  //   } else {
+  //     console.log("fail");
+  //   }
+  // });
 
-  removeClass('uid:bye', '23157').then(function(bool) {
-    if (bool) {
-      console.log("success");
-    } else {
-      console.log("fail");
-    }
-  });
+  // removeClass('uid:bye', '23157').then(function(bool) {
+  //   if (bool) {
+  //     console.log("success");
+  //   } else {
+  //     console.log("fail");
+  //   }
+  // });
 
-  createUser('uid:bye').then(function(bool) {
-    if (bool) {
-      console.log("success");
-    } else {
-      console.log("fail");
-    }
-  });
   // end of test functions!
 
 });
