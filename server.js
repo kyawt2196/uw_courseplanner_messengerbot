@@ -555,14 +555,30 @@ function receivedMessage(event) {
                         });
                     break;
                 case 'remove':
-                    sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");
-                    removeClass(senderID, departmentClass).then(function(bool) {
-                        if (bool) {
-                            console.log("success");
-                        } else {
-                            console.log("fail");
-                        }
-                    });
+                    
+                    var result = course.getClassByClassName({
+                            prefix: department,
+                            number:classNum
+                        },function (err, name) {
+                            if (typeof name[0] === 'undefined') {
+                                console.log("error " + departmentClass)
+                                sendTextMessage(senderID, "this class could not be found");
+                            } else {
+                                console.log("success " + departmentClass)
+                                removeClass(senderID, name[0].sln).then(function(bool) {
+                                if (bool) {
+                                        console.log("success");
+                                    } else {
+                                        console.log("fail");
+                                    }
+                                });
+                                sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");
+                            }
+                        });
+
+
+
+                
                     break;
                 default:
                     sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
