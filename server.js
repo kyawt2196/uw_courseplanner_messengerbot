@@ -457,8 +457,8 @@ function receivedMessage(event) {
           case 'find':
             sendTextMessage(senderID, "Sure, let me find " + departmentClass + " for you...");
             var result = course.getClassByClassName({
-              prefix:"UBW",
-              number:101
+              prefix: department,
+              number:classNum
             },function (err, name) {
                 if (typeof name[0] === 'undefined') {
                     sendTextMessage(senderID, "this class could not be found");
