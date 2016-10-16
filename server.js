@@ -313,16 +313,12 @@ function receivedMessage(event) {
       sessionId: 'senderID'
     }
     var request = apiaiApp.textRequest(messageText, options);
-    console.log("sending request to apiai: " + request);
     request.on('response', function(response) {
-        console.log(response);
         var results = response.result;
         var func = results.parameters.Functions;
         var department = results.parameters.Department;
         var classNum = results.parameters.number;
         var departmentClass = department + " " + classNum;
-        console.log(func);
-        console.log(typeof(func));
         switch(func){
           case 'add':
             sendTextMessage(senderID, "Adding class " + departmentClass);
@@ -344,7 +340,6 @@ function receivedMessage(event) {
     });
  
     request.end();
-    sendTextMessage(senderID, "Message received");
         
     
   } else if (messageAttachments) {
