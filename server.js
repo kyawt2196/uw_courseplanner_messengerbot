@@ -409,7 +409,7 @@ function receivedMessage(event) {
     //   "sln": "-1",
     //   "prefix": "BasketWeaving",
     //   "number": "-111",
-    //   "nameOfClass": "Weaving Baskets 101",
+    //   "nameOfclassName": "Weaving Baskets 101",
     //   "days":"mwf",
     //   "start":1245,
     //   "end":2:25,
@@ -432,7 +432,7 @@ function receivedMessage(event) {
           sln:-1,
           prefix:"UBW",
           number:101,
-          nameOfClass:"Underwater basket weaving 101",
+          nameOfclassName:"Underwater basket weaving 101",
           days:"mwf",
           start:1130,
           end:1220,
@@ -504,7 +504,7 @@ function receivedMessage(event) {
                             console.log("success " + department);
                             sendTextMessage(senderID, "Here is all the classes info: \n" +
                             "Class: " + name[0].prefix + " " + name[0].number + " \n" +
-                            "Name of the class: " + name[0].nameOfClass + " \n"
+                            "Name of the class: " + name[0].nameOfclassName + " \n"
                             );
                         }
                     });
@@ -521,7 +521,7 @@ function receivedMessage(event) {
                             console.log("success, adding " + departmentClass)
                         addClass(senderID, name[0].sln).then(function(bool) {
                             if (bool) {
-                                sendTextMessage(senderID, "Added class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", to your list");
+                                sendTextMessage(senderID, "Added class " + name[0].nameOfclassName + ", SLN: " + name[0].sln + ", to your list");
                             } else {
                                 sendTextMessage(senderID, "Fail to add class");
                             }
@@ -543,7 +543,7 @@ function receivedMessage(event) {
                                 console.log("success " + departmentClass)
                             sendTextMessage(senderID, "Here is the class info: \n" +
                                 "SLN " + name[0].sln + " \n" +
-                                "Name of the class: " + name[0].nameOfClass + " \n" +
+                                "Name of the class: " + name[0].nameOfclassName + " \n" +
                                 "Start time:  " + name[0].start + " \n" +
                                 "End time: " + name[0].end + " \n" +
                                 "Is it open? " + name[0].isOpen + " \n" 
