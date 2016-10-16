@@ -69,10 +69,6 @@ function createUser(uid) {
         }
       });
   });
-
-  
-
-  
 }
 
 
