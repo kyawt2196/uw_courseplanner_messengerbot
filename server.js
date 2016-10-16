@@ -25,18 +25,30 @@ app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
 /*
- * Connecting Firebase Database
- * 
+ * Connecting Firebase Database with admin privileges
  */
 var firebase = require("firebase");
 // Initialize Firebase
-var firebaseConfig = {
-  apiKey: " AIzaSyCBk4exBD9ncv7sxfh6FvUY1wo5owe3VCM",
-  authDomain: " course-finder-bot-databa-1db35.firebaseapp.com",
-  databaseURL: "https://https://course-finder-bot-databa-1db35.firebaseio.com",
-  storageBucket: "<we dont have a storage bucket>.appspot.com",
-};
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp({
+  serviceAccount: "./config/database-service-account-key.json",
+  databaseURL: "https://course-finder-bot-databa-1db35.firebaseio.com/"
+});
+
+// As an admin, the app has access to read and write all data, regardless of Security Rules
+var db = firebase.database();
+
+function createUser(uid, fName, lName) {
+  var usersRef = db.ref('users');
+  usersRef.set({
+    uid: {
+      firstName: fName,
+      lastName: lName,
+    } 
+  });
+}
+
+
+
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -846,6 +858,8 @@ function callSendAPI(messageData) {
 // certificate authority.
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
+  console.log('Testing create user function: ');
+  createUser('uid:hello', 'John', 'Doe');
 });
 
 module.exports = app;
