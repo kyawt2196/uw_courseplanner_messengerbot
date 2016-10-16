@@ -55,7 +55,7 @@ function createUser(uid) {
           var courseRef = db.ref('UserCourses');
           // no such user, create the user:
           courseRef.child(uid).set({
-            courseList: []
+            courseList: ["child"]
           });
           resolve(true);
         } else {
