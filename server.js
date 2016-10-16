@@ -279,7 +279,7 @@ function receivedMessage(event) {
 
   if (messageText) {
     var request = apiaiApp.textRequest(messageText);
-
+    console.log("sending message to apiai: " + messageText);
     request.on('response', function(response) {
         console.log(response);
     });
