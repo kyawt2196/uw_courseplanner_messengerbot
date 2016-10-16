@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-present, Facebook, Inc.
+ * Copyright 2016-present, Facebook, Inc. 
  * All rights reserved.
  *
  * This source code is licensed under the license found in the
@@ -16,13 +16,16 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
-  request = require('request');
+  request = require('request'),
+  apiai = require('apiai');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
+var apiaiApp = apiai(config.get('apiaiClientAccessToken'));
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -256,8 +259,6 @@ function receivedMessage(event) {
     // the text we received.
     switch (messageText) {
       case 'find':
-    
-
       case 'typing on':
         sendTypingOn(senderID);
         break;        
