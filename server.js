@@ -316,6 +316,7 @@ function receivedMessage(event) {
     console.log("sending request to apiai: " + request);
     request.on('response', function(response) {
         console.log(response);
+        console.log(typeof(response));
         console.log('parsing response object');
         var jsonResponseObj = JSON.parse(response);
         console.log('parsing complete');
