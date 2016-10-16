@@ -477,6 +477,20 @@ function receivedMessage(event) {
             }
         } else {
             switch(func){
+                case 'myplan':
+                    getUserCourseList(senderID).then(function(list) {
+                        var text = "";
+                        if (list.length === 0) {
+                            text = "You have not added any classes to your list. You may want to do so now!";
+                        } else {
+                            text = "These are the classes I saved for you:";
+                            list.forEach(function(entry) {
+                                text += "\n entry";
+                            }
+                        }
+
+                        sendTextMessage(senderID, text);
+                    break;
                 case 'list':
                     console.log("finding all courses in " + department + " department");
                     var result = course.getClassByDepartment({
