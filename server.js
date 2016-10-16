@@ -443,7 +443,7 @@ function receivedMessage(event) {
         if (intro != undefined && intro != "") {
             switch(intro) {
                 case 'intro':
-                    sendTextMessage(senderID, "Oh hi there! I'm Jennifer. A course finder");
+                    sendTextMessage(senderID, "Oh hi there! I'm a course finder!");
                     break;
                 case 'nice':
                     sendTextMessage(senderID, "Nice seeing you there! How can I help you today?");
@@ -467,7 +467,7 @@ function receivedMessage(event) {
                         } else {
                             console.log("success " + department)
                         sendTextMessage(senderID, "Here is all the classes info: \n" +
-                            "Class number: " + departmentClass + " \n" +
+                            "Class: " + name[0].prefix + " " + name[0].number + " \n" +
                             "Name of the class: " + name[0].nameOfClass + " \n"
                             );
                         }
