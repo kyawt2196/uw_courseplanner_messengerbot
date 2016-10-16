@@ -69,10 +69,6 @@ function createUser(uid) {
         }
       });
   });
-
-  
-
-  
 }
 
 
@@ -442,73 +438,79 @@ function receivedMessage(event) {
         var func = results.parameters.Functions;
         var department = results.parameters.Departments;
         var classNum = results.parameters.number;
+        var intro = results.parameters.Introduction;
         var departmentClass = department + " " + classNum;
-        switch(func){
-          case 'add':
-            course.getClassByClassName({
-              prefix: department,
-              number:classNum
-            },function (err, name) {
-                if (typeof name[0] === 'undefined') {
-                    console.log("error " + departmentClass)
-                    sendTextMessage(senderID, "this class could not be found");
-                } else {
-                    console.log("success, adding " + departmentClass)
-                    addClass(senderID, name[0].sln).then(function(bool) {
-                      if (bool) {
-                        sendTextMessage(senderID, "Added class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", to your list");
-                      } else {
-                        sendTextMessage(senderID, "Fail to add class");
-                      }
-                    });
-                    
-                }
-            });
-            break;
-          case 'find':
-            console.log("finding class " + departmentClass)
-            var result = course.getClassByClassName({
-              prefix: department,
-              number:classNum
-            },function (err, name) {
-                if (typeof name[0] === 'undefined') {
-                    console.log("error " + departmentClass)
-                    sendTextMessage(senderID, "this class could not be found");
-                } else {
-                    console.log("success " + departmentClass)
-                    sendTextMessage(senderID, "Here is the class info: \n" +
-                        "SLN " + name[0].sln + " \n" +
-                        "Name of the class: " + name[0].nameOfClass + " \n" +
-                        "Start time:  " + name[0].start + " \n" +
-                        "End time: " + name[0].end + " \n" +
-                        "Is it open? " + name[0].isOpen + " \n" 
-                      );
-                }
-            });
-            break;
-          case 'remove':
-            course.getClassByClassName({
-              prefix: department,
-              number:classNum
-            },function (err, name) {
-                if (typeof name[0] === 'undefined') {
-                    console.log("error " + departmentClass)
-                    sendTextMessage(senderID, "this class could not be found");
-                } else {
-                    console.log("success, adding " + departmentClass)
-                    removeClass(senderID, name[0].sln).then(function(bool) {
-                      if (bool) {
-                        sendTextMessage(senderID, "Removed class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", from your list");
-                      } else {
-                        sendTextMessage(senderID, "Fail to add class");
-                      }
-                    });
-                    
-                }
-            });
-            break;
-          default:
-            sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
+        if (intro != undefined && intro != "") {
+            switch(intro) {
+                case 'intro':
+                    sendTextMessage(senderID, "Oh hi there! I'm Jennifer. A course finder");
+                    break;
+                case 'nice':
+                    sendTextMessage(senderID, "Nice seeing you there! How can I help you today?");
+                    break;
+                case 'how':
+                    sendTextMessage(senderID, "It has been a great day! What can I help you today?");
+                    break;
+                default:
+                    sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
+            }
+        } else {
+            switch(func){
+              case 'add':
+                course.getClassByClassName({
+                  prefix: department,
+                  number:classNum
+                },function (err, name) {
+                    if (typeof name[0] === 'undefined') {
+                        console.log("error " + departmentClass)
+                        sendTextMessage(senderID, "this class could not be found");
+                    } else {
+                        console.log("success, adding " + departmentClass)
+                        addClass(senderID, name[0].sln).then(function(bool) {
+                          if (bool) {
+                            sendTextMessage(senderID, "Added class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", to your list");
+                          } else {
+                            sendTextMessage(senderID, "Fail to add class");
+                          }
+                        });
+                        
+                    }
+                });
+                break;
+              case 'find':
+                console.log("finding class " + departmentClass)
+                var result = course.getClassByClassName({
+                  prefix: department,
+                  number:classNum
+                },function (err, name) {
+                    if (typeof name[0] === 'undefined') {
+                        console.log("error " + departmentClass)
+                        sendTextMessage(senderID, "this class could not be found");
+                    } else {
+                        console.log("success " + departmentClass)
+                        sendTextMessage(senderID, "Here is the class info: \n" +
+                            "SLN " + name[0].sln + " \n" +
+                            "Name of the class: " + name[0].nameOfClass + " \n" +
+                            "Start time:  " + name[0].start + " \n" +
+                            "End time: " + name[0].end + " \n" +
+                            "Is it open? " + name[0].isOpen + " \n" 
+                          );
+                    }
+                });
+                break;
+              case 'remove':
+                sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");
+                removeClass(senderID, departmentClass).then(function(bool) {
+                  if (bool) {
+                    console.log("success");
+                  } else {
+                    console.log("fail");
+                  }
+                });
+                break;
+              default:
+                sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
+            }
         }
     });
 
