@@ -315,10 +315,11 @@ function receivedMessage(event) {
     var request = apiaiApp.textRequest(messageText, options);
     console.log("sending request to apiai: " + request);
     request.on('response', function(response) {
-        console.log(response.parameters.Functions);
-        var func = response.parameters.Functions;
-        var department = response.parameters.Department;
-        var classNum = response.parameters.number;
+        var jsonResponseObj = JSON.parse(response);
+        console.log(jsonResponseObj.parameters.Functions);
+        var func = jsonResponseObj.parameters.Functions;
+        var department = jsonResponseObj.parameters.Department;
+        var classNum = jsonResponseObj.parameters.number;
         var departmentClass = department + " " + classNum;
         switch(func){
           case 'add':
