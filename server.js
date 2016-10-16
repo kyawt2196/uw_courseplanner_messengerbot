@@ -464,14 +464,6 @@ function receivedMessage(event) {
                     
                 }
             });
-      
-              addClass(senderID, departmentClass).then(function(bool) {
-              if (bool) {
-                console.log("success");
-              } else {
-                console.log("fail");
-              }
-            });
             break;
           case 'find':
             console.log("finding class " + departmentClass)
