@@ -445,7 +445,26 @@ function receivedMessage(event) {
         var departmentClass = department + " " + classNum;
         switch(func){
           case 'add':
-            sendTextMessage(senderID, "Okay, I'll add " + departmentClass + " to your list of classes.");
+            course.getClassByClassName({
+              prefix: department,
+              number:classNum
+            },function (err, name) {
+                if (typeof name[0] === 'undefined') {
+                    console.log("error " + departmentClass)
+                    sendTextMessage(senderID, "this class could not be found");
+                } else {
+                    console.log("success, adding " + departmentClass)
+                    addClass(senderID, name[0].sln).then(function(bool) {
+                      if (bool) {
+                        sendTextMessage(senderID, "Added class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", to your list");
+                      } else {
+                        sendTextMessage(senderID, "Fail to add class");
+                      }
+                    });
+                    
+                }
+            });
+      
               addClass(senderID, departmentClass).then(function(bool) {
               if (bool) {
                 console.log("success");
