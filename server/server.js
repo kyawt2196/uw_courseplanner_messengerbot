@@ -9,7 +9,7 @@ const
 var app = express();
 //for heroku, process.env.PORT is heroku's port, 8080 is default port
 app.set('port', process.env.PORT || 8080);
-//app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
