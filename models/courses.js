@@ -46,6 +46,9 @@ courseSchema.statics.getClassByClassName = function (courseModel, cb) {
     return Course.find({ prefix: new RegExp(courseModel.prefix, 'i'), number: courseModel.number}, cb);
 };
 
+courseSchema.statics.getClassByDepartment = function (courseModel, cb) {
+    return Course.find({ prefix: new RegExp(courseModel.prefix, 'i')}, cb);
+};
 
 // Export the User Schema
 var Course = mongoose.model('Courses', courseSchema);

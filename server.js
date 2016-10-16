@@ -456,74 +456,91 @@ function receivedMessage(event) {
             }
         } else {
             switch(func){
-              case 'add':
-                course.getClassByClassName({
-                  prefix: department,
-                  number:classNum
-                },function (err, name) {
-                    if (typeof name[0] === 'undefined') {
-                        console.log("error " + departmentClass)
+                case 'list':
+                    console.log("finding all courses in " + department + " department");
+                    var result = course.getClassByDepartment({
+                        prefix: department
+                    }, function (err, name) {
+                        if (typeof name[0] === 'undefined') {
+                            console.log("error " + department)
+                        sendTextMessage(senderID, "these classes could not be found");
+                        } else {
+                            console.log("success " + department)
+                        sendTextMessage(senderID, "Here is all the classes info: \n" +
+                            "Class number: " + departmentClass + " \n" +
+                            "Name of the class: " + name[0].nameOfClass + " \n"
+                            );
+                        }
+                    });
+                    break;
+                case 'add':
+                    course.getClassByClassName({
+                        prefix: department,
+                        number:classNum
+                    },function (err, name) {
+                        if (typeof name[0] === 'undefined') {
+                            console.log("error " + departmentClass)
                         sendTextMessage(senderID, "this class could not be found");
-                    } else {
-                        console.log("success, adding " + departmentClass)
+                        } else {
+                            console.log("success, adding " + departmentClass)
                         addClass(senderID, name[0].sln).then(function(bool) {
-                          if (bool) {
-                            sendTextMessage(senderID, "Added class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", to your list");
-                          } else {
-                            sendTextMessage(senderID, "Fail to add class");
-                          }
+                            if (bool) {
+                                sendTextMessage(senderID, "Added class " + name[0].nameOfClass + ", SLN: " + name[0].sln + ", to your list");
+                            } else {
+                                sendTextMessage(senderID, "Fail to add class");
+                            }
                         });
-                        
-                    }
-                });
-                break;
-              case 'find':
-                console.log("finding class " + departmentClass)
-                var result = course.getClassByClassName({
-                  prefix: department,
-                  number:classNum
-                },function (err, name) {
-                    if (typeof name[0] === 'undefined') {
-                        console.log("error " + departmentClass)
-                        sendTextMessage(senderID, "this class could not be found");
-                    } else {
-                        console.log("success " + departmentClass)
-                        sendTextMessage(senderID, "Here is the class info: \n" +
-                            "SLN " + name[0].sln + " \n" +
-                            "Name of the class: " + name[0].nameOfClass + " \n" +
-                            "Start time:  " + name[0].start + " \n" +
-                            "End time: " + name[0].end + " \n" +
-                            "Is it open? " + name[0].isOpen + " \n" 
-                          );
-                    }
-                });
-                break;
-              case 'remove':
-                sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");
-                removeClass(senderID, departmentClass).then(function(bool) {
-                  if (bool) {
-                    console.log("success");
-                  } else {
-                    console.log("fail");
-                  }
-                });
-                break;
-              default:
-                sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
+
+                        }
+                    });
+                    break;
+                case 'find':
+                    console.log("finding class " + departmentClass)
+                        var result = course.getClassByClassName({
+                            prefix: department,
+                            number:classNum
+                        },function (err, name) {
+                            if (typeof name[0] === 'undefined') {
+                                console.log("error " + departmentClass)
+                            sendTextMessage(senderID, "this class could not be found");
+                            } else {
+                                console.log("success " + departmentClass)
+                            sendTextMessage(senderID, "Here is the class info: \n" +
+                                "SLN " + name[0].sln + " \n" +
+                                "Name of the class: " + name[0].nameOfClass + " \n" +
+                                "Start time:  " + name[0].start + " \n" +
+                                "End time: " + name[0].end + " \n" +
+                                "Is it open? " + name[0].isOpen + " \n" 
+                                );
+                            }
+                        });
+                    break;
+                case 'remove':
+                    sendTextMessage(senderID, "I'll remove class " + departmentClass + ", just a sec!");
+                    removeClass(senderID, departmentClass).then(function(bool) {
+                        if (bool) {
+                            console.log("success");
+                        } else {
+                            console.log("fail");
+                        }
+                    });
+                    break;
+                default:
+                    sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
             }
         }
     });
 
-     
+
     request.on('error', function(error) {
         console.log(error);
     });
- 
+
     request.end();
-        
-    
+
+
   } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
+      sendTextMessage(senderID, "Message with attachment received");
   }
 }
 
@@ -536,21 +553,21 @@ function receivedMessage(event) {
  *
  */
 function receivedDeliveryConfirmation(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var delivery = event.delivery;
-  var messageIDs = delivery.mids;
-  var watermark = delivery.watermark;
-  var sequenceNumber = delivery.seq;
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+    var delivery = event.delivery;
+    var messageIDs = delivery.mids;
+    var watermark = delivery.watermark;
+    var sequenceNumber = delivery.seq;
 
-  if (messageIDs) {
-    messageIDs.forEach(function(messageID) {
-      console.log("Received delivery confirmation for message ID: %s", 
-        messageID);
-    });
-  }
+    if (messageIDs) {
+        messageIDs.forEach(function(messageID) {
+            console.log("Received delivery confirmation for message ID: %s", 
+                messageID);
+        });
+    }
 
-  console.log("All message before %d were delivered.", watermark);
+    console.log("All message before %d were delivered.", watermark);
 }
 
 
@@ -562,20 +579,20 @@ function receivedDeliveryConfirmation(event) {
  * 
  */
 function receivedPostback(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfPostback = event.timestamp;
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+    var timeOfPostback = event.timestamp;
 
-  // The 'payload' param is a developer-defined field which is set in a postback 
-  // button for Structured Messages. 
-  var payload = event.postback.payload;
+    // The 'payload' param is a developer-defined field which is set in a postback 
+    // button for Structured Messages. 
+    var payload = event.postback.payload;
 
-  console.log("Received postback for user %d and page %d with payload '%s' " + 
-    "at %d", senderID, recipientID, payload, timeOfPostback);
+    console.log("Received postback for user %d and page %d with payload '%s' " + 
+            "at %d", senderID, recipientID, payload, timeOfPostback);
 
-  // When a postback is called, we'll send a message back to the sender to 
-  // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+    // When a postback is called, we'll send a message back to the sender to 
+    // let them know it was successful
+    sendTextMessage(senderID, "Postback called");
 }
 
 /*
@@ -586,15 +603,15 @@ function receivedPostback(event) {
  * 
  */
 function receivedMessageRead(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
 
-  // All messages before watermark (a timestamp) or sequence have been seen.
-  var watermark = event.read.watermark;
-  var sequenceNumber = event.read.seq;
+    // All messages before watermark (a timestamp) or sequence have been seen.
+    var watermark = event.read.watermark;
+    var sequenceNumber = event.read.seq;
 
-  console.log("Received message read event for watermark %d and sequence " +
-    "number %d", watermark, sequenceNumber);
+    console.log("Received message read event for watermark %d and sequence " +
+            "number %d", watermark, sequenceNumber);
 }
 
 /*
@@ -606,14 +623,14 @@ function receivedMessageRead(event) {
  * 
  */
 function receivedAccountLink(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
 
-  var status = event.account_linking.status;
-  var authCode = event.account_linking.authorization_code;
+    var status = event.account_linking.status;
+    var authCode = event.account_linking.authorization_code;
 
-  console.log("Received account link event with for user %d with status %s " +
-    "and auth code %s ", senderID, status, authCode);
+    console.log("Received account link event with for user %d with status %s " +
+            "and auth code %s ", senderID, status, authCode);
 }
 
 
@@ -625,17 +642,17 @@ function receivedAccountLink(event) {
  *
  */
 function sendTextMessage(recipientId, messageText) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: messageText,
-      metadata: "DEVELOPER_DEFINED_METADATA"
-    }
-  };
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: messageText,
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
 
-  callSendAPI(messageData);
+    callSendAPI(messageData);
 }
 
 /*
@@ -643,16 +660,16 @@ function sendTextMessage(recipientId, messageText) {
  *
  */
 function sendTypingOn(recipientId) {
-  console.log("Turning typing indicator on");
+    console.log("Turning typing indicator on");
 
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    sender_action: "typing_on"
-  };
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        sender_action: "typing_on"
+    };
 
-  callSendAPI(messageData);
+    callSendAPI(messageData);
 }
 
 /*
@@ -660,16 +677,16 @@ function sendTypingOn(recipientId) {
  *
  */
 function sendTypingOff(recipientId) {
-  console.log("Turning typing indicator off");
+    console.log("Turning typing indicator off");
 
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    sender_action: "typing_off"
-  };
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        sender_action: "typing_off"
+    };
 
-  callSendAPI(messageData);
+    callSendAPI(messageData);
 }
 
 /*
@@ -677,26 +694,26 @@ function sendTypingOff(recipientId) {
  *
  */
 function sendAccountLinking(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: "Welcome. Link your account.",
-          buttons:[{
-            type: "account_link",
-            url: SERVER_URL + "/authorize"
-          }]
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "button",
+                    text: "Welcome. Link your account.",
+                    buttons:[{
+                        type: "account_link",
+                        url: SERVER_URL + "/authorize"
+                    }]
+                }
+            }
         }
-      }
-    }
-  };  
+    };  
 
-  callSendAPI(messageData);
+    callSendAPI(messageData);
 }
 
 /*
@@ -705,77 +722,77 @@ function sendAccountLinking(recipientId) {
  *
  */
 function callSendAPI(messageData) {
-  request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    request({
+        uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: messageData
 
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id; //uer id
-      var messageId = body.message_id;
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var recipientId = body.recipient_id; //uer id
+            var messageId = body.message_id;
 
-      if (messageId) {
-        console.log("Successfully sent message with id %s to recipient %s", 
-          messageId, recipientId);
-      } else {
-      console.log("Successfully called Send API for recipient %s", 
-        recipientId);
-      }
-    } else {
-      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-    }
-  });  
+            if (messageId) {
+                console.log("Successfully sent message with id %s to recipient %s", 
+                    messageId, recipientId);
+            } else {
+                console.log("Successfully called Send API for recipient %s", 
+                    recipientId);
+            }
+        } else {
+            console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+        }
+    });  
 }
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
 app.listen(app.get('port'), function() {
-  console.log('Messenger Bot Server running on ', app.get('port'));
-  
-  // Test server functions:
-  // createUser('uid:bye').then(function(bool) {
-  //   if (bool) {
-  //     console.log("success");
-  //   } else {
-  //     console.log("fail");
-  //   }
-  // });
-  // createUser('uid:hello').then(function(bool) {
-  //   if (bool) {
-  //     console.log("success");
-  //   } else {
-  //     console.log("fail");
-  //   }
-  // });
-  // createUser('uid:bye').then(function(bool) {
-  //   if (bool) {
-  //     console.log("success");
-  //   } else {
-  //     console.log("fail");
-  //   }
-  // });
+    console.log('Messenger Bot Server running on ', app.get('port'));
+
+    // Test server functions:
+    // createUser('uid:bye').then(function(bool) {
+    //   if (bool) {
+    //     console.log("success");
+    //   } else {
+    //     console.log("fail");
+    //   }
+    // });
+    // createUser('uid:hello').then(function(bool) {
+    //   if (bool) {
+    //     console.log("success");
+    //   } else {
+    //     console.log("fail");
+    //   }
+    // });
+    // createUser('uid:bye').then(function(bool) {
+    //   if (bool) {
+    //     console.log("success");
+    //   } else {
+    //     console.log("fail");
+    //   }
+    // });
 
 
-  // addClass('uid:bye', '23157').then(function(bool) {
-  //   if (bool) {
-  //     console.log("success");
-  //   } else {
-  //     console.log("fail");
-  //   }
-  // });
+    // addClass('uid:bye', '23157').then(function(bool) {
+    //   if (bool) {
+    //     console.log("success");
+    //   } else {
+    //     console.log("fail");
+    //   }
+    // });
 
-  // removeClass('uid:bye', '23157').then(function(bool) {
-  //   if (bool) {
-  //     console.log("success");
-  //   } else {
-  //     console.log("fail");
-  //   }
-  // });
+    // removeClass('uid:bye', '23157').then(function(bool) {
+    //   if (bool) {
+    //     console.log("success");
+    //   } else {
+    //     console.log("fail");
+    //   }
+    // });
 
-  // end of test functions!
+    // end of test functions!
 
 });
 
