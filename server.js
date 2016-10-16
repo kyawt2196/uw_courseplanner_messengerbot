@@ -309,7 +309,10 @@ function receivedMessage(event) {
     // }
 
   if (messageText) {
-    var request = apiaiApp.textRequest(messageText);
+    var options = {
+      sessionId: 'senderID'
+    }
+    var request = apiaiApp.textRequest(messageText, options);
     console.log("sending request to apiai: " + request);
     request.on('response', function(response) {
         console.log(response.parameters.Functions);
