@@ -17,13 +17,17 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-  apiai = require('apiai');
+  apiai = require('apiai'),
+  mongoose = require('mongoose-connect.js'),
+  course = require('./models/courses.js');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
+mongoose.connect(app);
 
 /*
  * Connecting Firebase Database with admin privileges
@@ -382,9 +386,48 @@ function receivedMessage(event) {
     //  "sessionId": "490a07d7-2d0f-4e77-925d-3d90edef9aa2"
     // }
 
+    // {
+    //   "sln": "-1",
+    //   "prefix": "BasketWeaving",
+    //   "number": "-111",
+    //   "nameOfClass": "Weaving Baskets 101",
+    //   "days":"mwf",
+    //   "start":1245,
+    //   "end":2:25,
+    //   "section":false,
+    //   "instructor":"shayan",
+    //   "open":false,
+    //   "generalEducation":"INS",
+    //   "writing":false,
+    //   "link":"www.fakelink.com"
+    // }
+
+
   if (messageText) {
     var options = {
       sessionId: 'senderID'
+    }
+    switch(messageText){
+      case 'admin:testPreloadCourse':
+        course.createCourse({
+          sln:-1,
+          prefix:"UBW",
+          number:101,
+          nameOfClass:"Underwater basket weaving 101",
+          days:"mwf",
+          start:1130,
+          end:1220,
+          isSection:false,
+          instructor:"Shayan",
+          isOpen:true,
+          generalEd:"QNS",
+          isWriting:true,
+          link:"fakelink.com"
+        });
+        break;
+      default:
+        break;
+
     }
     var request = apiaiApp.textRequest(messageText, options);
     request.on('response', function(response) {
