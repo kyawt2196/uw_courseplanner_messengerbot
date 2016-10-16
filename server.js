@@ -443,13 +443,13 @@ function receivedMessage(event) {
         if (intro != undefined && intro != "") {
             switch(intro) {
                 case 'intro':
-                    sendTextMessage(senderID, "Oh hi there! I'm Jennifer. A course finder";
+                    sendTextMessage(senderID, "Oh hi there! I'm Jennifer. A course finder");
                     break;
                 case 'nice':
-                    sendTextMessage(senderID, "Nice seeing you there! How can I help you today?";
+                    sendTextMessage(senderID, "Nice seeing you there! How can I help you today?");
                     break;
                 case 'how':
-                    sendTextMessage(senderID, "It has been a great day! What can I help you today?";
+                    sendTextMessage(senderID, "It has been a great day! What can I help you today?");
                     break;
                 default:
                     sendTextMessage(senderID, "I'm sorry. I didn't understand what you said.");
