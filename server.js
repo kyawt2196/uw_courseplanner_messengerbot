@@ -405,6 +405,7 @@ function receivedMessage(event) {
             });
             break;
           case 'find':
+            createUser(senderID);
             sendTextMessage(senderID, "finding class " + departmentClass);
             break;
           case 'remove':
