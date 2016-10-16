@@ -321,6 +321,8 @@ function receivedMessage(event) {
         var department = results.parameters.Department;
         var classNum = results.parameters.number;
         var departmentClass = department + " " + classNum;
+        console.log(func);
+        console.log(typeof(func));
         switch(func){
           case 'add':
             sendTextMessage(senderID, "Adding class " + departmentClass);
@@ -330,7 +332,6 @@ function receivedMessage(event) {
             sendTextMessage(senderID, "removing class " + departmentClass);
           default:
             sendTextMessage(senderID, "Sorry, I didn't understand your intent"); 
-
         }
     });
 
