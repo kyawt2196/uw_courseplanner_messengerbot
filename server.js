@@ -390,7 +390,7 @@ function receivedMessage(event) {
     request.on('response', function(response) {
         var results = response.result;
         var func = results.parameters.Functions;
-        var department = results.parameters.Department;
+        var department = results.parameters.Departments;
         var classNum = results.parameters.number;
         var departmentClass = department + " " + classNum;
         switch(func){
