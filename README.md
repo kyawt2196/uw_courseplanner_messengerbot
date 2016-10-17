@@ -1,3 +1,12 @@
+UW Course Finder/Manager developed during Dubhacks 2016 (Placed Top 6 Teams) :D
+
+
+
+
+
+
+
+
 To deploy to Heroku
 
 //install and login if you haven't
