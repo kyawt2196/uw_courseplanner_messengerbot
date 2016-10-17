@@ -4,7 +4,7 @@ var courseSchema = mongoose.Schema({
 	sln:Number,
 	prefix:String,
 	number:Number,
-	nameOfClass:String,
+	nameOfclassName:String,
 	days:String,
 	start:Number,
 	end:Number,
@@ -24,7 +24,7 @@ courseSchema.statics.createCourse = function (courseModel) {
 					sln:courseModel.sln,
 					prefix:courseModel.prefix,
 					number:courseModel.number,
-					nameOfClass:courseModel.nameOfClass,
+					nameOfclassName:courseModel.nameOfclassName,
 					days:courseModel.days,
 					start:courseModel.start,
 					end:courseModel.end,
@@ -46,6 +46,9 @@ courseSchema.statics.getClassByClassName = function (courseModel, cb) {
     return Course.find({ prefix: new RegExp(courseModel.prefix, 'i'), number: courseModel.number}, cb);
 };
 
+courseSchema.statics.getClassByDepartment = function (courseModel, cb) {
+    return Course.find({ prefix: new RegExp(courseModel.prefix, 'i')}, cb);
+};
 
 // Export the User Schema
 var Course = mongoose.model('Courses', courseSchema);
